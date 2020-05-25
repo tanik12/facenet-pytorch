@@ -9,6 +9,7 @@ def data_load():
     img_dir = "./data/test_image4tani"
     img_save_flag = False
 
+    feature_arr = np.empty((0,512), float)
     for img_path in glob(img_dir + '/*'):
         if img_save_flag:
             img_name = os.path.basename(img_path)
@@ -20,11 +21,16 @@ def data_load():
         img = Image.open(img_path)
 
         img_cropped = model_eff.trim_img(img.resize((160, 160)), model_eff.trim_face_model, img_path=img_save_path)
-        print(img_cropped.shape)
+        #print(img_cropped.shape)
 
         feature = model_eff.inference(img_cropped, model_eff.extract_feature_model)
-        print(feature.shape)
+        feature_numpy = feature.to('cpu').detach().numpy().copy()
+        feature_arr = np.append(feature_arr, np.array(feature_numpy), axis=0)
+    
+    #print(feature_arr.shape)
+    return feature_arr, glob(img_dir + '/*')
+
 
 if __name__ == "__main__":
-    data_load()
+    feat = data_load()
 
