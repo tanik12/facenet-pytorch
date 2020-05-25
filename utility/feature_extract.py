@@ -39,8 +39,9 @@ if __name__ == "__main__":
     img = Image.open(img_path)
 
     dirname = os.path.dirname(img_path)
+    img_save_path = None
 
     model_eff = ModelExtractFaceFeature()
-    img_cropped = model_eff.trim_img(img, dirname, model_eff.trim_face_model)
+    img_cropped = model_eff.trim_img(img.resize((160, 160)), model_eff.trim_face_model, img_path=img_save_path)
     feature = model_eff.inference(img_cropped, model_eff.extract_feature_model)
-    print(feature.shape)
+    feature_numpy = feature.to('cpu').detach().numpy().copy()

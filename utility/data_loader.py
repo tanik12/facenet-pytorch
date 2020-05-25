@@ -1,5 +1,5 @@
 import numpy as np
-from feature_extract import ModelExtractFaceFeature
+from utility.feature_extract import ModelExtractFaceFeature
 from PIL import Image
 from glob import glob
 import os
@@ -32,5 +32,4 @@ def data_load():
 
 
 if __name__ == "__main__":
-    feat = data_load()
-
+    pass

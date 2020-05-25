@@ -1,6 +1,6 @@
 #tani                                                                                                                    
-from feature_extract import ModelExtractFaceFeature
-from data_loader import data_load
+from utility.feature_extract import ModelExtractFaceFeature
+from utility.data_loader import data_load
 from PIL import Image
 import numpy as np
 import os
