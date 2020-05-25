@@ -20,8 +20,11 @@ class ModelExtractFaceFeature:
         return mtcnn, resnet
 
     # 顔領域をトリミングしたものを保存。
-    def trim_img(self, img, img_path, model):
-        img_cropped = model(img, save_path= img_path + "/out_1.jpg")
+    def trim_img(self, img, model, img_path=None):
+        if img_path==None:
+            img_cropped = model(img)
+        else:
+            img_cropped = model(img, save_path=img_path)
         #print(img_cropped.shape)
         return img_cropped
     
