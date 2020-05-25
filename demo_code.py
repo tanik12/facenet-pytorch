@@ -40,3 +40,4 @@ if __name__ == "__main__":
     model_eff = ModelExtractFaceFeature()
     img_cropped = model_eff.trim_img(img, dirname, model_eff.trim_face_model)
     feature = model_eff.inference(img_cropped, model_eff.extract_feature_model)
+    print(feature.shape)
