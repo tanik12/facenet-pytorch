@@ -1,5 +1,5 @@
 #tani                                                                                                                    
-from demo_code import ModelExtractFaceFeature
+from feature_extract import ModelExtractFaceFeature
 from facenet_pytorch import MTCNN, InceptionResnetV1
 from PIL import Image
 import os
