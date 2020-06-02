@@ -29,7 +29,7 @@ class ModelExtractFaceFeature:
         return img_cropped
     
     # 顔の特徴を抽出
-    def inference(self, img_cropped, model):    
+    def inference(self, img_cropped, model):
         img_embedding = model(img_cropped.unsqueeze(0))
         #print(img_embedding.shape)
         return img_embedding
