@@ -1,12 +1,11 @@
 #tani                                                                                                                    
 from utility.feature_extract import ModelExtractFaceFeature
 from utility.data_loader import data_load
+from utility.similarity_calculate import *
+
 from PIL import Image
 import numpy as np
 import os
-
-def cos_sim(v1, v2):
-    return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
 
 def main():
     feat_compare, img_list = data_load()
@@ -22,23 +21,15 @@ def main():
     feature = model_eff.inference(img_cropped, model_eff.extract_feature_model)
     feature_numpy = feature.to('cpu').detach().numpy().copy()
 
-    res = cos_sim(feature_numpy, feat_compare.T)
-    #Debug用.一番高い値を使いたい場合使用すること.
-    #max_id = np.argmax(res, 1)
-    #img_path = img_list[max_id[0]]
-    #sim_val = res[0, max_id[0]]
-    #print(sim_val, img_path)
+    feature_numpy = np.tile(feature_numpy, (feat_compare.shape[0], 1))
 
-    rank_val = 5
-    sorted_ids = res[0].argsort()[::-1]
-    sim_val_top5 = res[0, sorted_ids][:rank_val]
-    img_name_top5 = np.array(img_list)[sorted_ids][:rank_val]
+    #cos類似度
+    #res = cos_sim(feature_numpy, feat_compare.T)
+    #ranking_cos_sim(img_path, img_list, res)
 
-    print("類似度が高い順に並び替えています。")
-    for i, (val, name) in enumerate(zip(sim_val_top5, img_name_top5)):
-        person_name = os.path.basename(name).replace(".jpg", "")
-        sentence = "No.{0}: (類似度, 名前) --> ({1}, {2})".format(i, val, person_name)
-        print(sentence)
+    #ユークリッド距離(論文ではこちらを採用する)
+    res_2 = euclid_sim(feature_numpy, feat_compare)
+    ranking_euclid_sim(img_path, img_list, res_2)
 
 if __name__ == "__main__":
     main()
