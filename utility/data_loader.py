@@ -6,7 +6,7 @@ import os
 
 def data_load():
     model_eff = ModelExtractFaceFeature()
-    img_dir = "./data/test_image4tani"
+    img_dir = "./data/test_image4tani_2"
     img_save_flag = False
 
     feature_arr = np.empty((0,512), float)
@@ -18,13 +18,17 @@ def data_load():
         else:
             img_save_path = None            
 
-        img = Image.open(img_path)
+        try:
+            img = Image.open(img_path)
+            img_cropped = model_eff.trim_img(img.resize((160, 160)), model_eff.trim_face_model, img_path=img_save_path)
+            #print(img_cropped.shape)
+    
+            feature = model_eff.inference(img_cropped, model_eff.extract_feature_model)
+            feature_numpy = feature.to('cpu').detach().numpy().copy()
+        except:
+            print("Error_img_cropped --> ", img_cropped)
+            continue
 
-        img_cropped = model_eff.trim_img(img.resize((160, 160)), model_eff.trim_face_model, img_path=img_save_path)
-        #print(img_cropped.shape)
-
-        feature = model_eff.inference(img_cropped, model_eff.extract_feature_model)
-        feature_numpy = feature.to('cpu').detach().numpy().copy()
         feature_arr = np.append(feature_arr, np.array(feature_numpy), axis=0)
     
     #print(feature_arr.shape)
