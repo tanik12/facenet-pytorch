@@ -25,6 +25,7 @@ def data_load():
             img_save_path = None            
 
         try:
+            #トリミングした画像を格納していく
             img = Image.open(img_path)
             img_cropped = model_eff.trim_img(img.resize((160, 160)), model_eff.trim_face_model, img_path=img_save_path)
             img_cropped = img_cropped.to('cpu').detach().numpy().copy()

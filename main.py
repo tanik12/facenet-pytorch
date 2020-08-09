@@ -28,7 +28,7 @@ def main():
     res = cos_sim(feature_numpy, feat_compare[0].T)
     ranking_cos_sim(img_path, img_list, res)
 
-    #ユークリッド距離(論文ではこちらを採用する)
+    #ユークリッド距離(論文ではこちらを採用している)
     res_2 = euclid_sim(feature_numpy, feat_compare[0])
     ranking_euclid_sim(img_path, img_list, res_2)
 
