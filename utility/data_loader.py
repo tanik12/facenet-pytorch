@@ -9,16 +9,13 @@ def data_load():
     model_eff = ModelExtractFaceFeature()
     img_dir = "./data/test_image4tani_2"
     img_path_list = glob(img_dir + '/*')
+
     img_path_list_length = len(img_path_list)
     img_save_flag = False
-    count = 0
-
     img_crop_list = list()    
     feature_list = list()
 
-    # feature_arr = np.empty((img_path_list_length,512), float)
-    # feature_arr = np.empty((0,512), float)
-    # for img_path in glob(img_dir + '/*'):
+    #dataの格納
     for idx, img_path in enumerate(img_path_list):
         if img_save_flag:
             img_name = os.path.basename(img_path)
@@ -37,6 +34,7 @@ def data_load():
             print("Error_img_cropped --> ", img_cropped.shape)
             continue
 
+    #推論する
     img_crop_arr = torch.from_numpy(np.array(img_crop_list).astype(np.float32)).clone()
     feature = model_eff.inference(img_crop_arr, model_eff.extract_feature_model)
     # feature = model_eff.inference(img_cropped, model_eff.extract_feature_model)
@@ -44,7 +42,6 @@ def data_load():
     feature_list.append(feature_numpy)
     
     return np.array(feature_list), img_path_list
-    # return np.array(feature_arr), img_path_list
 
 
 if __name__ == "__main__":

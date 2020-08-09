@@ -8,11 +8,7 @@ import numpy as np
 import os
 
 def main():
-    import time
-    import sys
-    st = time.time()
     feat_compare, img_list = data_load()
-    print(time.time() - st)
 
     img_path = "/Users/taniyan/git/facenet-pytorch/data/test_images/angelina_jolie/ayaueto.jpg"
     img_save_path = None
@@ -26,7 +22,7 @@ def main():
     feature_numpy = feature.to('cpu').detach().numpy().copy()
 
     feature_numpy = np.tile(feature_numpy, (feat_compare[0].shape[0], 1))
-    print("---> ", feature_numpy.shape, feat_compare[0].shape)
+    # print("---> ", feature_numpy.shape, feat_compare[0].shape)
 
     #cos類似度
     res = cos_sim(feature_numpy, feat_compare[0].T)
