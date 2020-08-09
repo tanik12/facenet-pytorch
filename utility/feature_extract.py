@@ -30,8 +30,15 @@ class ModelExtractFaceFeature:
     
     # 顔の特徴を抽出
     def inference(self, img_cropped, model):
-        img_embedding = model(img_cropped.unsqueeze(0))
-        #print(img_embedding.shape)
+        print("ttttt1:: ", img_cropped.shape)
+        
+        if img_cropped.ndim > 3: 
+            img_embedding = model(img_cropped)
+            # img_embedding = model(img_cropped.unsqueeze(0))
+            # img_embedding = model(img_cropped.unsqueeze(0))
+            #print(img_embedding.shape)
+        else:
+            img_embedding = model(img_cropped.unsqueeze(0))
         return img_embedding
 
 if __name__ == "__main__":

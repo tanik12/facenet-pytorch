@@ -13,7 +13,7 @@ def ranking_cos_sim(img_path, img_list, res):
     sim_val = res[0, max_id[0]]
     print(sim_val, img_path)
 
-    rank_val = 5
+    rank_val = 10
     sorted_ids = res[0].argsort()[::-1]
     sim_val_top5 = res[0, sorted_ids][:rank_val]
     img_name_top5 = np.array(img_list)[sorted_ids][:rank_val]
@@ -36,7 +36,7 @@ def ranking_euclid_sim(img_path, img_list, res):
     sim_val = res[0, min_id[0]]
     print(sim_val, img_path)
 
-    rank_val = 5
+    rank_val = 10
     sorted_ids = res[0].argsort()
     sim_val_top5 = res[0, sorted_ids][:rank_val]
     img_name_top5 = np.array(img_list)[sorted_ids][:rank_val]
