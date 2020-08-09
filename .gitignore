@@ -12,3 +12,7 @@ test.py
 .cache
 .ipython
 .local
+.DS_Store
+.python-version
+data
+data/test_images
